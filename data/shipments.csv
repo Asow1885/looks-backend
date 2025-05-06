@@ -1,0 +1,22 @@
+import csv
+
+def submit_shipment():
+    origin = origin_entry.get()
+    destination = destination_entry.get()
+    cost = cost_entry.get()
+    weight = weight_entry.get()
+
+    # Save to CSV
+    with open("../data/shipments.csv", mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([origin, destination, cost, weight])
+
+    print("✅ Shipment saved to CSV!")
+    print(f"Origin: {origin}, Destination: {destination}, Cost: {cost}, Weight: {weight}")
+
+    # Clear the form
+    origin_entry.delete(0, tk.END)
+    destination_entry.delete(0, tk.END)
+    cost_entry.delete(0, tk.END)
+    weight_entry.delete(0, tk.END)
+guinea,,,

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Route Optimizer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #3498db;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .result {
+      background: #ecf0f1;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🚚 AI Route Optimizer</h2>
+    <form id="routeForm">
+      <label for="from">Origin City</label>
+      <input type="text" id="from" required>
+
+      <label for="to">Destination City</label>
+      <input type="text" id="to" required>
+
+      <label for="weather">Weather</label>
+      <select id="weather">
+        <option value="clear">Clear</option>
+        <option value="rainy">Rainy</option>
+        <option value="storm">Storm</option>
+      </select>
+
+      <label for="traffic">Traffic</label>
+      <select id="traffic">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="heavy">Heavy</option>
+      </select>
+
+      <label for="cargo">Cargo Type</label>
+      <input type="text" id="cargo" placeholder="e.g. Electronics">
+
+      <button type="submit">Optimize Route</button>
+    </form>
+
+    <div class="result" id="resultBox" style="display:none;"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('routeForm');
+    const resultBox = document.getElementById('resultBox');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        from: document.getElementById('from').value,
+        to: document.getElementById('to').value,
+        weather: document.getElementById('weather').value,
+        traffic: document.getElementById('traffic').value,
+        cargo_type: document.getElementById('cargo').value
+      };
+
+      const response = await fetch('/ai_optimize_route', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `
+          <h4>🧠 Optimized Route:</h4>
+          <p><strong>Route:</strong> ${result.route.join(" → ")}</p>
+          <p><strong>Total Distance:</strong> ${result.total_distance} km</p>
+        `;
+      } else {
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `<p style="color:red;">❌ ${result.error}</p>`;
+      }
+    });
+  </script>
+</body>
+</html>

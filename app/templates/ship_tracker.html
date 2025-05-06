@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ship Tracker Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+      #map { height: 100vh; }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    var map = L.map('map').setView([20, 0], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+    }).addTo(map);
+
+    fetch('/get_shipments_data')
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(shipment => {
+            var marker = L.marker([shipment.current_position[0], shipment.current_position[1]]).addTo(map);
+            marker.bindPopup(`
+                <b>${shipment.ship_name}</b><br>
+                From: ${shipment.origin}<br>
+                To: ${shipment.destination}<br>
+                Status: ${shipment.status}
+            `);
+        });
+    });
+</script>
+</body>
+</html>

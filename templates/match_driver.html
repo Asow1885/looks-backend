@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Match Driver to Containers</title>
+</head>
+<body>
+
+<h2>Match Driver to Available Containers</h2>
+
+<form method="POST">
+    <label for="driver_origin">Origin:</label><br>
+    <select name="driver_origin" required>
+        {% for port in ports %}
+            <option value="{{ port }}">{{ port }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label for="driver_destination">Destination:</label><br>
+    <select name="driver_destination" required>
+        {% for port in ports %}
+            <option value="{{ port }}">{{ port }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <button type="submit">Find Matches</button>
+</form>
+
+<hr>
+
+{% if matches %}
+    <h3>Matching Containers:</h3>
+    <ul>
+        {% for shipment in matches %}
+            <li>
+                <strong>Container ID:</strong> {{ shipment.id }} |
+                <strong>Origin:</strong> {{ shipment.origin }} |
+                <strong>Destination:</strong> {{ shipment.destination }} |
+                <strong>Weight:</strong> {{ shipment.weight }} tons |
+                <strong>ETA:</strong> {{ shipment.eta.strftime('%Y-%m-%d %H:%M') }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No matches found yet. Try again later!</p>
+{% endif %}
+
+</body>
+</html>

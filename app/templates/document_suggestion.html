@@ -1,0 +1,27 @@
+{% if suggested_docs %}
+<h3>📋 Suggested Documents:</h3>
+<ul>
+    {% for doc in suggested_docs %}
+        <li>
+            {{ doc }} —
+            {% if "Bill of Lading" in doc %}
+                <a href="{{ url_for('view_document', filename='bill_of_lading.pdf') }}" target="_blank">View</a>
+                |
+                <a href="{{ url_for('static', filename='documents/bill_of_lading.pdf') }}" download>Download</a>
+            {% elif "Customs Declaration" in doc %}
+                <a href="{{ url_for('view_document', filename='customs_declaration.pdf') }}" target="_blank">View</a>
+                |
+                <a href="{{ url_for('static', filename='documents/customs_declaration.pdf') }}" download>Download</a>
+            {% elif "Heavy Cargo" in doc %}
+                <a href="{{ url_for('view_document', filename='heavy_cargo_permit.pdf') }}" target="_blank">View</a>
+                |
+                <a href="{{ url_for('static', filename='documents/heavy_cargo_permit.pdf') }}" download>Download</a>
+            {% elif "Insurance Certificate" in doc %}
+                <a href="{{ url_for('view_document', filename='insurance_certificate.pdf') }}" target="_blank">View</a>
+                |
+                <a href="{{ url_for('static', filename='documents/insurance_certificate.pdf') }}" download>Download</a>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}

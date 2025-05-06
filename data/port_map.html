@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script type='text/javascript' src='https://8080-m-s-30gjgmyp1p7re-c.us-west1-0.prod.colab.dev/x_8TFJ7ewBBeNbsM_xs7Ec834O9xol_8EsPBYxQBcAiJBzVR2kZQT9Ql_S2Iv7EvGDRA_n2dsI5VJUvT9TH1Xw=='></script><script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_132deecf7a822f317c0d4c02edfdc021 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_132deecf7a822f317c0d4c02edfdc021" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_132deecf7a822f317c0d4c02edfdc021 = L.map(
+                "map_132deecf7a822f317c0d4c02edfdc021",
+                {
+                    center: [20.0, 0.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 2,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_4fbc058167f3d8ffd69d087851de04fe = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_4fbc058167f3d8ffd69d087851de04fe.addTo(map_132deecf7a822f317c0d4c02edfdc021);
+        
+    
+            var marker_cluster_87d8f5c7f067f95933cc21d0192229e5 = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var marker_8eefbd2cb91d463cc1178bfaf1e368be = L.marker(
+                [31.2304, 121.4737],
+                {
+}
+            ).addTo(marker_cluster_87d8f5c7f067f95933cc21d0192229e5);
+        
+    
+            var icon_f19a7745798d9af43fb400cc5f785fcb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_54055895c15f39145defa1e5a506fad6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c9121aa4cec77e006e1826e566512fcb = $(`<div id="html_c9121aa4cec77e006e1826e566512fcb" style="width: 100.0%; height: 100.0%;">Shanghai (China) - 736.3 MT</div>`)[0];
+                popup_54055895c15f39145defa1e5a506fad6.setContent(html_c9121aa4cec77e006e1826e566512fcb);
+            
+        
+
+        marker_8eefbd2cb91d463cc1178bfaf1e368be.bindPopup(popup_54055895c15f39145defa1e5a506fad6)
+        ;
+
+        
+    
+    
+            marker_8eefbd2cb91d463cc1178bfaf1e368be.bindTooltip(
+                `<div>
+                     Shanghai
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8eefbd2cb91d463cc1178bfaf1e368be.setIcon(icon_f19a7745798d9af43fb400cc5f785fcb);
+            
+    
+            var marker_da5521038cf543a6d649db4da6734fd3 = L.marker(
+                [1.3521, 103.8198],
+                {
+}
+            ).addTo(marker_cluster_87d8f5c7f067f95933cc21d0192229e5);
+        
+    
+            var icon_2f8980c66c2b1450fb5f1c0059d21a6d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f7a369150b55f7e4f33945b731b9777b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e170107eccccb4f6b3d5f89b0b878586 = $(`<div id="html_e170107eccccb4f6b3d5f89b0b878586" style="width: 100.0%; height: 100.0%;">Singapore (Singapore) - 626.0 MT</div>`)[0];
+                popup_f7a369150b55f7e4f33945b731b9777b.setContent(html_e170107eccccb4f6b3d5f89b0b878586);
+            
+        
+
+        marker_da5521038cf543a6d649db4da6734fd3.bindPopup(popup_f7a369150b55f7e4f33945b731b9777b)
+        ;
+
+        
+    
+    
+            marker_da5521038cf543a6d649db4da6734fd3.bindTooltip(
+                `<div>
+                     Singapore
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_da5521038cf543a6d649db4da6734fd3.setIcon(icon_2f8980c66c2b1450fb5f1c0059d21a6d);
+            
+    
+            var marker_fc518abd9fb30e94516616cda7c173ea = L.marker(
+                [51.9225, 4.4792],
+                {
+}
+            ).addTo(marker_cluster_87d8f5c7f067f95933cc21d0192229e5);
+        
+    
+            var icon_fc404dfb425c1bb755976dcd94f59f4f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "ship",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_112f8e5e3a71727b2f104255b1591ad4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_19e2c08f69294016b497da325b17e296 = $(`<div id="html_19e2c08f69294016b497da325b17e296" style="width: 100.0%; height: 100.0%;">Rotterdam (Netherlands) - 469.0 MT</div>`)[0];
+                popup_112f8e5e3a71727b2f104255b1591ad4.setContent(html_19e2c08f69294016b497da325b17e296);
+            
+        
+
+        marker_fc518abd9fb30e94516616cda7c173ea.bindPopup(popup_112f8e5e3a71727b2f104255b1591ad4)
+        ;
+
+        
+    
+    
+            marker_fc518abd9fb30e94516616cda7c173ea.bindTooltip(
+                `<div>
+                     Rotterdam
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_fc518abd9fb30e94516616cda7c173ea.setIcon(icon_fc404dfb425c1bb755976dcd94f59f4f);
+            
+    
+            marker_cluster_87d8f5c7f067f95933cc21d0192229e5.addTo(map_132deecf7a822f317c0d4c02edfdc021);
+        
+    
+            tile_layer_4fbc058167f3d8ffd69d087851de04fe.addTo(map_132deecf7a822f317c0d4c02edfdc021);
+        
+    
+                marker_8eefbd2cb91d463cc1178bfaf1e368be.setIcon(icon_f19a7745798d9af43fb400cc5f785fcb);
+            
+    
+                marker_da5521038cf543a6d649db4da6734fd3.setIcon(icon_2f8980c66c2b1450fb5f1c0059d21a6d);
+            
+    
+                marker_fc518abd9fb30e94516616cda7c173ea.setIcon(icon_fc404dfb425c1bb755976dcd94f59f4f);
+            
+    
+            marker_cluster_87d8f5c7f067f95933cc21d0192229e5.addTo(map_132deecf7a822f317c0d4c02edfdc021);
+        
+</script>
+</html>

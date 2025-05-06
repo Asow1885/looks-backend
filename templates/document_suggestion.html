@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document Suggestion - Shipping App</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: white;
+      padding: 10px 20px;
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+      border-bottom: 1px solid #ddd;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-bar a {
+      text-decoration: none;
+      color: #3498db;
+      margin-right: 20px;
+      font-weight: bold;
+      padding: 8px 0;
+    }
+
+    .nav-bar a:hover {
+      color: #2980b9;
+    }
+
+    .nav-bar a.active {
+      border-bottom: 2px solid #3498db;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    /* Dark container styles from JS version */
+    .js-container {
+      max-width: 900px;
+      margin: auto;
+      padding: 30px;
+      background-color: #1e1e1e;
+      border-radius: 20px;
+    }
+
+    .js-container h1 {
+      color: white;
+      text-align: center;
+    }
+
+    .mode-buttons {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .mode-buttons button {
+      padding: 10px 20px;
+      border-radius: 8px;
+      background: #2a2a2a;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .mode-buttons button.active {
+      background: #444;
+    }
+
+    label {
+      color: #ccc;
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 15px;
+    }
+
+    .submit-btn {
+      margin-top: 25px;
+      padding: 12px;
+      background: #666;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .doc-result {
+      background: black;
+      color: white;
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .doc-result a {
+      color: white;
+      margin-right: 15px;
+    }
+
+    .template-box {
+      margin-top: 40px;
+      background: #ecf4fc;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .template-box h3 {
+      color: #2980b9;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-bar">
+    <a href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}class="active"{% endif %}>Home</a>
+    <a href="{{ url_for('analytics') }}" {% if request.endpoint == 'analytics' %}class="active"{% endif %}>Analytics</a>
+    <a href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}class="active"{% endif %}>Contact</a>
+    <a href="{{ url_for('document_suggestion') }}" {% if request.endpoint == 'document_suggestion' %}class="active"{% endif %}>Documents</a>
+  </div>
+</header>
+
+<main>
+  <h1 style="text-align: center;">📑 Document Suggestion System</h1>
+
+  <!-- The dark mode JS-powered suggestion tool -->
+  <div class="js-container">
+    <h1>📂 Hub Assistance</h1>
+
+    <div class="mode-buttons">
+      <button onclick="setMode('freight')" id="freightBtn" class="active">🚛 Freight</button>
+      <button onclick="setMode('cargo')" id="cargoBtn">🚢 Cargo</button>
+    </div>
+
+    <label>Origin</label>
+    <input id="origin" placeholder="e.g. Houston">
+
+    <label>Destination</label>
+    <input id="destination" placeholder="e.g. Atlanta">
+
+    <label>Weight</label>
+    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+      <input id="weight" type="number" placeholder="e.g. 500" style="flex:1;">
+      <select id="unit" style="width:100px; border-radius:8px;">
+        <option value="kg">kg</option>
+        <option value="lbs">lbs</option>
+      </select>
+    </div>
+
+    <label>Type of Goods (optional)</label>
+    <input id="goods" placeholder="e.g. Electronics">
+
+    <button onclick="suggestDocuments()" class="submit-btn">Suggest Documents</button>
+
+    <div id="results" style="margin-top:30px;"></div>
+  </div>
+
+  <!-- Downloadable blank templates -->
+  <div class="template-box">
+    <h3>📂 Downloadable Blank Templates</h3>
+    <ul>
+      {% for doc in static_docs %}
+        <li>
+          <a href="{{ url_for('static', filename='documents/' + doc.filename) }}" download>{{ doc.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</main>
+
+<script>
+  let currentMode = 'freight';
+  function setMode(mode) {
+    currentMode = mode;
+    document.getElementById('freightBtn').classList.toggle('active', mode === 'freight');
+    document.getElementById('cargoBtn').classList.toggle('active', mode === 'cargo');
+  }
+
+  function suggestDocuments() {
+    const results = document.getElementById('results');
+    results.innerHTML = `<h3 style="color: white;">📄 Required Documents</h3>`;
+
+    const freightDocs = [
+      { name: 'Freight Bill', link: 'https://www.crestintalliance.com/s/part-396form6.pdf' },
+      { name: 'Driver Manifest', link: 'https://www.crestintalliance.com/s/InstructionsforDivisibleLoadPermits.pdf' },
+      { name: 'Truck Inspection Form', link: 'https://www.crestintalliance.com/s/part-396form6.pdf' }
+    ];
+
+    const cargoDocs = [
+      { name: 'Bill of Lading', link: 'https://www.crestintalliance.com/s/Customs-Declaration.pdf' },
+      { name: 'Customs Declaration', link: 'https://www.crestintalliance.com/s/Customs-Declaration.pdf' },
+      { name: 'Insurance Certificate', link: 'https://www.crestintalliance.com/s/ACORD-25-fillable.pdf' }
+    ];
+
+    const selectedDocs = currentMode === 'freight' ? freightDocs : cargoDocs;
+
+    selectedDocs.forEach(doc => {
+      results.innerHTML += `
+        <div class="doc-result">
+          <strong>${doc.name}</strong><br>
+          <a href="${doc.link}" target="_blank">View</a>
+          <a href="${doc.link}" download>Download</a>
+        </div>
+      `;
+    });
+  }
+</script>
+
+</body>
+</html>

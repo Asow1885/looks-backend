@@ -1,0 +1,9 @@
+<header>
+    <div class="nav-bar">
+        <a href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}class="active"{% endif %}>Home</a>
+        <a href="{{ url_for('analytics') }}" {% if request.endpoint == 'analytics' %}class="active"{% endif %}>Analytics</a>
+        <a href="{{ url_for('contact') }}" {% if request.endpoint == 'contact' %}class="active"{% endif %}>Contact</a>
+        <a href="{{ url_for('document_suggestion') }}" {% if request.endpoint == 'document_suggestion' %}class="active"{% endif %}>🧠 Smart Suggestion</a>
+    </div>
+</header>
+

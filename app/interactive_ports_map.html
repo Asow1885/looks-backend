@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_6e01569dfc91a731d828991c1986ee6e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_6e01569dfc91a731d828991c1986ee6e" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_6e01569dfc91a731d828991c1986ee6e = L.map(
+                "map_6e01569dfc91a731d828991c1986ee6e",
+                {
+                    center: [31.5293, -1.8594],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_575a2e54d800fbbc88957df8aad5f784 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_575a2e54d800fbbc88957df8aad5f784.addTo(map_6e01569dfc91a731d828991c1986ee6e);
+        
+    
+            var marker_f7f1622d473cf073112752a9e94d24bb = L.marker(
+                [9.5085, -13.7125],
+                {
+}
+            ).addTo(map_6e01569dfc91a731d828991c1986ee6e);
+        
+    
+        var custom_icon_e4f17b79b1c47c484f02d57d1dff8aa8 = L.icon({
+  "iconUrl": "https://image.shutterstock.com/image-vector/sailboat-icon-colorful-flat-illustration-260nw-1097878897.jpg",
+  "iconSize": [30, 30],
+});
+        marker_f7f1622d473cf073112752a9e94d24bb.setIcon(custom_icon_e4f17b79b1c47c484f02d57d1dff8aa8);
+        
+    
+        var popup_e3f02a56158afe9706076d998ac12794 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8ba21d0fb76d2405c521bba693857ca4 = $(`<div id="html_8ba21d0fb76d2405c521bba693857ca4" style="width: 100.0%; height: 100.0%;">Conakry Port, Guinea</div>`)[0];
+                popup_e3f02a56158afe9706076d998ac12794.setContent(html_8ba21d0fb76d2405c521bba693857ca4);
+            
+        
+
+        marker_f7f1622d473cf073112752a9e94d24bb.bindPopup(popup_e3f02a56158afe9706076d998ac12794)
+        ;
+
+        
+    
+    
+                marker_f7f1622d473cf073112752a9e94d24bb.setIcon(custom_icon_e4f17b79b1c47c484f02d57d1dff8aa8);
+            
+    
+            var marker_e7806ba094fb114cac94d40a002f7d69 = L.marker(
+                [53.5501, 9.9937],
+                {
+}
+            ).addTo(map_6e01569dfc91a731d828991c1986ee6e);
+        
+    
+        var custom_icon_92b2acb1e2a1a7357278189253c3f30e = L.icon({
+  "iconUrl": "https://image.shutterstock.com/image-vector/sailboat-icon-colorful-flat-illustration-260nw-1097878897.jpg",
+  "iconSize": [30, 30],
+});
+        marker_e7806ba094fb114cac94d40a002f7d69.setIcon(custom_icon_92b2acb1e2a1a7357278189253c3f30e);
+        
+    
+        var popup_8801f382ea9d89092f3f5166f6cdfb43 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_78ba7e6d83113b1b52ae6c47e57baade = $(`<div id="html_78ba7e6d83113b1b52ae6c47e57baade" style="width: 100.0%; height: 100.0%;">Hamburg Port, Germany</div>`)[0];
+                popup_8801f382ea9d89092f3f5166f6cdfb43.setContent(html_78ba7e6d83113b1b52ae6c47e57baade);
+            
+        
+
+        marker_e7806ba094fb114cac94d40a002f7d69.bindPopup(popup_8801f382ea9d89092f3f5166f6cdfb43)
+        ;
+
+        
+    
+    
+                marker_e7806ba094fb114cac94d40a002f7d69.setIcon(custom_icon_92b2acb1e2a1a7357278189253c3f30e);
+            
+    
+            var circle_marker_7edb93087910b2e0603f2c68717e537c = L.circleMarker(
+                [9.5085, -13.7125],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_6e01569dfc91a731d828991c1986ee6e);
+        
+    
+        var popup_7a731c4d33fdcbd8a40d9df55872a4be = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3e916fbbc7023a59bb72ed070f1208df = $(`<div id="html_3e916fbbc7023a59bb72ed070f1208df" style="width: 100.0%; height: 100.0%;">Conakry Port</div>`)[0];
+                popup_7a731c4d33fdcbd8a40d9df55872a4be.setContent(html_3e916fbbc7023a59bb72ed070f1208df);
+            
+        
+
+        circle_marker_7edb93087910b2e0603f2c68717e537c.bindPopup(popup_7a731c4d33fdcbd8a40d9df55872a4be)
+        ;
+
+        
+    
+    
+            var circle_marker_d8a37fef284a1f40acc7dbc625cae368 = L.circleMarker(
+                [53.5501, 9.9937],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_6e01569dfc91a731d828991c1986ee6e);
+        
+    
+        var popup_30735c12d101b1f85a8b228cdfdbc72b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ce8518e91887a0d666b1a1725477670d = $(`<div id="html_ce8518e91887a0d666b1a1725477670d" style="width: 100.0%; height: 100.0%;">Hamburg Port</div>`)[0];
+                popup_30735c12d101b1f85a8b228cdfdbc72b.setContent(html_ce8518e91887a0d666b1a1725477670d);
+            
+        
+
+        circle_marker_d8a37fef284a1f40acc7dbc625cae368.bindPopup(popup_30735c12d101b1f85a8b228cdfdbc72b)
+        ;
+
+        
+    
+</script>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NexRoutePro Dashboard</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqS4ATuaN5BHKgmLTmAFBi1osN836k9mY&callback=initMap" async defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      background: #f3f4f6;
+    }
+    aside {
+      width: 300px;
+      background: #1f2937;
+      color: white;
+      padding: 20px;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 20px;
+      background: #111827;
+      color: white;
+      font-size: 1.5rem;
+    }
+    #map {
+      flex: 1;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    label, select, input {
+      display: block;
+      margin: 10px 0;
+      width: 100%;
+    }
+    .result-box {
+      background: white;
+      color: black;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <h2>NexRoutePro</h2>
+<form method="POST" action="/dashboard" style="display: flex; flex-direction: column; gap: 12px;">
+  <label>Where are you starting from?</label>
+  <select name="from" required>
+    <optgroup label="United States">
+      <option>Chicago</option>
+      <option>Houston</option>
+      <option>New York</option>
+      <option>Los Angeles</option>
+      <option>Atlanta</option>
+      <option>San Francisco</option>
+      <option>Seattle</option>
+      <option>Miami</option>
+      <option>Boston</option>
+      <option>Denver</option>
+      <option>Dallas</option>
+      <option>Philadelphia</option>
+      <option>Orlando</option>
+      <option>Phoenix</option>
+      <option>Charlotte</option>
+    </optgroup>
+    <optgroup label="Europe">
+      <option>Rotterdam</option>
+      <option>Hamburg</option>
+      <option>Antwerp</option>
+      <option>Marseille</option>
+      <option>Barcelona</option>
+      <option>London</option>
+      <option>Paris</option>
+      <option>Berlin</option>
+      <option>Rome</option>
+      <option>Oslo</option>
+    </optgroup>
+    <optgroup label="Africa">
+      <option>Lagos</option>
+      <option>Conakry</option>
+      <option>Cape Town</option>
+      <option>Durban</option>
+      <option>Mombasa</option>
+      <option>Accra</option>
+      <option>Nairobi</option>
+      <option>Abidjan</option>
+      <option>Dar es Salaam</option>
+      <option>Tunis</option>
+    </optgroup>
+    <optgroup label="Asia">
+      <option>Shanghai</option>
+      <option>Dubai</option>
+      <option>Singapore</option>
+      <option>Mumbai</option>
+      <option>Tokyo</option>
+      <option>Seoul</option>
+      <option>Hong Kong</option>
+      <option>Bangkok</option>
+      <option>Kuala Lumpur</option>
+      <option>Jakarta</option>
+    </optgroup>
+  </select>
+
+  <label>Where are you headed?</label>
+  <select name="to" required>
+    <optgroup label="United States">
+      <option>Chicago</option>
+      <option>Houston</option>
+      <option>New York</option>
+      <option>Los Angeles</option>
+      <option>Atlanta</option>
+      <option>San Francisco</option>
+      <option>Seattle</option>
+      <option>Miami</option>
+      <option>Boston</option>
+      <option>Denver</option>
+      <option>Dallas</option>
+      <option>Philadelphia</option>
+      <option>Orlando</option>
+      <option>Phoenix</option>
+      <option>Charlotte</option>
+    </optgroup>
+    <optgroup label="Europe">
+      <option>Rotterdam</option>
+      <option>Hamburg</option>
+      <option>Antwerp</option>
+      <option>Marseille</option>
+      <option>Barcelona</option>
+      <option>London</option>
+      <option>Paris</option>
+      <option>Berlin</option>
+      <option>Rome</option>
+      <option>Oslo</option>
+    </optgroup>
+    <optgroup label="Africa">
+      <option>Lagos</option>
+      <option>Conakry</option>
+      <option>Cape Town</option>
+      <option>Durban</option>
+      <option>Mombasa</option>
+      <option>Accra</option>
+      <option>Nairobi</option>
+      <option>Abidjan</option>
+      <option>Dar es Salaam</option>
+      <option>Tunis</option>
+    </optgroup>
+    <optgroup label="Asia">
+      <option>Shanghai</option>
+      <option>Dubai</option>
+      <option>Singapore</option>
+      <option>Mumbai</option>
+      <option>Tokyo</option>
+      <option>Seoul</option>
+      <option>Hong Kong</option>
+      <option>Bangkok</option>
+      <option>Kuala Lumpur</option>
+      <option>Jakarta</option>
+    </optgroup>
+  </select>
+
+  <label>🤖 How are you traveling today?</label>
+  <div style="display: flex; gap: 10px;">
+    <label><input type="radio" name="cargo" value="freight" checked> 🚛 Freight</label>
+    <label><input type="radio" name="cargo" value="cargo"> 📦 Cargo</label>
+    <label><input type="radio" name="cargo" value="air"> ✈️ Air</label>
+  </div>
+
+  <button type="submit" style="margin-top: 10px; padding: 10px; font-weight: bold; background: #1f2937; color: white; border: none; border-radius: 5px; cursor: pointer;">Optimize Route</button>
+</form>
+
+
+
+    {% if result and result.route %}
+    <div class="result-box">
+      <h4>Route Result</h4>
+      <p><strong>Route:</strong> {{ result.route | join(' → ') }}</p>
+      <p><strong>Distance:</strong> {{ result.total_distance }} km</p>
+      <p><strong>Weather:</strong> {{ result.weather_used }}</p>
+      <p><strong>Origin:</strong> {{ result.origin_weather.condition }} ({{ result.origin_weather.temperature }})</p>
+      <p><strong>Destination:</strong> {{ result.destination_weather.condition }} ({{ result.destination_weather.temperature }})</p>
+    </div>
+    {% endif %}
+  </aside>
+
+  <main>
+    <header>Route Map</header>
+    <div id="map"></div>
+  </main>
+
+  <script>
+  const route = {{ route | tojson }};
+  console.log("Route from Flask:", route);
+
+  function initMap() {
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 5,
+      center: { lat: 39.8283, lng: -98.5795 },
+    });
+
+    const geocoder = new google.maps.Geocoder();
+    const routeCoords = [];
+
+    function geocodeNext(index) {
+      if (index >= route.length) {
+        drawRoute();
+        return;
+      }
+
+      geocoder.geocode({ address: route[index] }, function(results, status) {
+        if (status === "OK") {
+          const location = results[0].geometry.location;
+          routeCoords.push(location);
+          new google.maps.Marker({
+            map,
+            position: location,
+            label: route[index][0],
+            title: route[index]
+          });
+        } else {
+          console.warn(`Geocode failed for ${route[index]}: ${status}`);
+        }
+
+        geocodeNext(index + 1);
+      });
+    }
+
+    function drawRoute() {
+      const path = new google.maps.Polyline({
+        path: routeCoords,
+        geodesic: true,
+        strokeColor: "#4285F4",
+        strokeOpacity: 1.0,
+        strokeWeight: 4
+      });
+      path.setMap(map);
+    }
+
+    if (route.length > 0) {
+      geocodeNext(0);
+    }
+  }
+</script>
+
+</body>
+</html>

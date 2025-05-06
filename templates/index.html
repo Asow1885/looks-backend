@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Shipping App</title>
+    <!-- Leaflet Map CSS + JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha512-..." crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha512-..." crossorigin=""></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            background-color: white;
+            padding: 10px 20px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #3498db;
+            margin-right: 20px;
+            font-weight: bold;
+            padding: 8px 0;
+        }
+
+        .nav-bar a:hover {
+            color: #2980b9;
+        }
+
+        .nav-bar a.active {
+            border-bottom: 2px solid #3498db;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .shipment-card {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .button-primary {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .button-primary:hover {
+            background-color: #2980b9;
+        }
+
+        #map {
+            height: 400px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'header.html' %}
+
+
+
+
+<!-- Map container -->
+<div id="map"></div>
+
+<main>
+    <h1>Shipping Management Home 🚢</h1>
+
+    <a href="{{ url_for('generate_fake_shipments') }}" class="button-primary">Generate Fake Shipments</a>
+
+    <div class="shipment-list">
+        <!-- JS will dynamically fill this section -->
+    </div>
+</main>
+
+<script>
+    function refreshShipments() {
+        fetch('/get_shipments_data')
+            .then(response => response.json())
+            .then(data => {
+                const shipmentList = document.querySelector('.shipment-list');
+                shipmentList.innerHTML = '';  // Clear previous shipments
+
+                if (data.length > 0) {
+                    data.forEach(shipment => {
+                        const card = document.createElement('div');
+                        card.className = 'shipment-card';
+                        card.innerHTML = `
+                            <h3>${shipment.ship_name}</h3>
+                            <p><strong>Origin:</strong> ${shipment.origin}</p>
+                            <p><strong>Destination:</strong> ${shipment.destination}</p>
+                            <p><strong>Weight:</strong> ${shipment.weight} kg</p>
+                            <p><strong>Class:</strong> ${shipment.shipping_class}</p>
+                            <p><strong>Distance:</strong> ${shipment.distance.toFixed(2)} km</p>
+                            <p><strong>Cost:</strong> $${shipment.cost.toFixed(2)}</p>
+                            <p><strong>Status:</strong> ${shipment.status}</p>
+                        `;
+                        shipmentList.appendChild(card);
+                    });
+                } else {
+                    shipmentList.innerHTML = '<p>No shipments yet! Click the button above to generate some.</p>';
+                }
+            })
+            .catch(error => console.error("Error loading shipments:", error));
+    }
+
+    // Refresh shipments every 10 seconds
+    setInterval(refreshShipments, 10000);
+
+    // Load shipments immediately when page loads
+    document.addEventListener('DOMContentLoaded', refreshShipments);
+</script>
+
+<script>
+    // Initialize the map
+    const map = L.map('map').setView([20, 0], 2);
+
+    // Load OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Custom ship icon
+    const shipIcon = L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/1062/1062768.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        popupAnchor: [0, -16]
+    });
+
+    // Store ship markers
+    const shipMarkers = {};
+
+    // Load real shipments onto the map
+    function loadShipmentsOnMap() {
+        fetch('/get_shipments_data')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(shipment => {
+                    if (shipment.status !== "Arrived") {
+                        const key = shipment.id;
+
+                        if (shipMarkers[key]) {
+                            moveShipSmoothly(shipMarkers[key], shipment.current_position);
+                        } else {
+                            const marker = L.marker(
+                                [shipment.current_position[0], shipment.current_position[1]],
+                                { icon: shipIcon }
+                            ).addTo(map);
+
+                            marker.bindPopup(`
+                                <b>${shipment.ship_name}</b><br/>
+                                <strong>From:</strong> ${shipment.origin}<br/>
+                                <strong>To:</strong> ${shipment.destination}<br/>
+                                <strong>Status:</strong> ${shipment.status}<br/>
+                                <strong>Weight:</strong> ${shipment.weight} kg
+                            `);
+
+                            shipMarkers[key] = marker;
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error("Error loading shipments onto map:", error));
+    }
+
+    // Move ships smoothly
+    function moveShipSmoothly(marker, newPosition) {
+        const current = marker.getLatLng();
+        const target = L.latLng(newPosition[0], newPosition[1]);
+        const steps = 30;
+        let step = 0;
+
+        const move = setInterval(() => {
+            step++;
+            const lat = current.lat + (target.lat - current.lat) * (step / steps);
+            const lng = current.lng + (target.lng - current.lng) * (step / steps);
+            marker.setLatLng([lat, lng]);
+            if (step >= steps) clearInterval(move);
+        }, 100); // smooth animation every 100 ms
+    }
+
+    // Load shipments once when the page loads
+    document.addEventListener('DOMContentLoaded', loadShipmentsOnMap);
+
+    // Auto-refresh every 1 hour (3600000 ms)
+    setInterval(loadShipmentsOnMap, 3600000);
+</script>
+
+</body>
+</html>
+
+
+
+
+
+

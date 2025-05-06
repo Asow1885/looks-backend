@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>📚 Document Center</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .doc-card {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .doc-actions a {
+            margin-right: 15px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .doc-actions a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📚 Document Center</h1>
+
+{% for doc in documents %}
+    <div class="doc-card">
+        <h3>{{ doc.name }}</h3>
+        <div class="doc-actions">
+            <a href="{{ url_for('view_document', filename=doc.filename) }}" target="_blank">👁️ View</a>
+            <a href="{{ url_for('static', filename='documents/' + doc.filename) }}" download>⬇️ Download</a>
+        </div>
+    </div>
+{% endfor %}
+
+</body>
+</html>
+
